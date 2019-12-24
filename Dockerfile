@@ -25,14 +25,10 @@ RUN set -ex \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-RUN apk update && apk add \
-	ca-certificates \
-	groff \
-	less \
-	python \
-	py-pip \
-	&& rm -rf /var/cache/apk/* \
+RUN apt-get update && apt-get install -y \
+    php5-mcrypt \
+    python-pip \
   && pip install pip --upgrade \
   && pip install awscli
-
+  
 WORKDIR /
