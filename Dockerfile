@@ -25,6 +25,14 @@ RUN set -ex \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-RUN apt-get install python-pip python-dev build-essential -yq && pip install -U awscli
+RUN apk update && apk add \
+	ca-certificates \
+	groff \
+	less \
+	python \
+	py-pip \
+	&& rm -rf /var/cache/apk/* \
+  && pip install pip --upgrade \
+  && pip install awscli
 
 WORKDIR /
