@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+FROM mirror.manatadbir.ir/dotnet/core/sdk:3.1
 
 # set up node
 ENV NODE_VERSION 12.13.1
@@ -11,6 +11,10 @@ RUN curl -SL "$NODE_DOWNLOAD_URL" --output nodejs.tar.gz \
     && rm nodejs.tar.gz \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
+#setup php
+RUN apt-get update && apt-get install -y \
+    python-pip \
+    && pip install awscli
 # set up yarn
 ENV YARN_VERSION 1.21.1
 
@@ -25,10 +29,7 @@ RUN set -ex \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-RUN apt-get update && apt-get install -y \
-    php5-mcrypt \
-    python-pip \
-  && pip install pip --upgrade \
-  && pip install awscli
+
   
 WORKDIR /
+
